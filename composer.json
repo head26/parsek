@@ -1,0 +1,16 @@
+{
+  "name": "parsek",
+  "require": {
+    "php": ">=7.0.0",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "slim/slim": "3.*",
+    "smarty/smarty": "~3.1",
+    "symfony/process": "~2.7",
+    "phpmailer/phpmailer": "5.2.*"
+  },
+  "autoload": {
+    "psr-4": { "Parsek\\": "src/parsek" }
+  }
+}
