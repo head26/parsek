@@ -2,10 +2,11 @@
   "name": "parsek",
   "require": {
     "php": ">=5.5.9",
-    "slim/slim": "3.*",
-    "smarty/smarty": "~3.1"
+    "slim/slim": "^3.1",
+    "slim/php-view": "^2.0",
+    "monolog/monolog": "^1.17"
   },
   "autoload": {
-    "psr-4": { "Parsek\\": "src/parsek" }
+    "psr-4": { "Parsek\\": "src/Parsek" }
   }
 }
