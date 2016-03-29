@@ -1,33 +1,48 @@
 <?php
+use developeruz\db_rbac\behaviors\AccessBehavior;
+$params = array_merge(
+    require(__DIR__ . '/params.php'),
+    require(__DIR__ . '/params-local.php')
+);
+
 return [
+    'id' => 'app',
+    'name' => 'Abs Analitics',
+
+    'basePath' => dirname(dirname(__DIR__)),
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'language' => 'ru',
+    //'controllerNamespace' => 'app\controllers',
+    //'defaultRoute' => 'site/login',
+    //'controller' => 'site',
+    'bootstrap' => ['log'],
+    /*'as AccessBehavior' => [
+        'class' => AccessBehavior::className(),
+        'rules' => [
+            'site' => [
+                [
+                    'actions' => ['login', 'index', 'logout', 'error'],
+                    'allow' => true,
+                ],
+            ],
+        ],
+    ],*/
     'modules' => [
         'permit' => [
             'class' => 'developeruz\db_rbac\Yii2DbRbac',
             'params' => [
-                'userClass' => 'common\models\User',
+                'userClass' => 'app\modules\user\models\User',
+            ],
+        ],
+        'main' => [
+            'class' => 'app\modules\main\Module',
+        ],
+        'modules' => [
+            'user' => [
+                'class' => 'app\modules\user\Module',
             ],
         ],
     ],
-    'components' => [
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-        ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-        ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                'login' => 'site/login',
-                '<module:\w+>/<controller:\w+>/<action:(\w|-)+>' => '<module>/<controller>/<action>',
-                '<module:\w+>/<controller:\w+>/<action:(\w|-)+>/<id:\d+>' => '<module>/<controller>/<action>',
-            ],
-        ],
-    ],
+    'components' => require(__DIR__ . '/components.php'),
+    'params' => $params,
 ];

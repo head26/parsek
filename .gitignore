@@ -1,10 +1,13 @@
+/runtime
 # yii console command
 /yii
 
 # phpstorm project files
 .idea
 
+/console/runtime
 # netbeans project files
+/common/runtime
 nbproject
 
 # zend studio for eclipse project files
@@ -16,6 +19,7 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
+/frontend
 /vendor
 
 # composer itself is not needed
