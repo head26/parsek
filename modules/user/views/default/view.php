@@ -11,7 +11,7 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-view">
+<div class="user-default-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

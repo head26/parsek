@@ -4,7 +4,7 @@
 
 $this->title = 'Abs Analitics';
 ?>
-<div class="site-index">
+<div class="user-default-index">
 
     <div class="jumbotron">
         <h1>Congratulations!</h1>

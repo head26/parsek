@@ -8,25 +8,33 @@ $params = array_merge(
 return [
     'id' => 'app',
     'name' => 'Abs Analitics',
+    'homeUrl' => '/',
 
     'basePath' => dirname(dirname(__DIR__)),
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'language' => 'ru',
     //'controllerNamespace' => 'app\controllers',
-    //'defaultRoute' => 'site/login',
+    'defaultRoute' => 'main/default/index',
     //'controller' => 'site',
     'bootstrap' => ['log'],
-    /*'as AccessBehavior' => [
+    'as AccessBehavior' => [
         'class' => AccessBehavior::className(),
         'rules' => [
-            'site' => [
+            'main/default' => [
                 [
-                    'actions' => ['login', 'index', 'logout', 'error'],
+                    'actions' => ['index', 'error'],
                     'allow' => true,
                 ],
             ],
+            'user/default' => [
+                [
+                    'actions' => ['login', 'logout'],
+                    'allow' => true,
+                ],
+            ],
+
         ],
-    ],*/
+    ],
     'modules' => [
         'permit' => [
             'class' => 'developeruz\db_rbac\Yii2DbRbac',
@@ -37,10 +45,8 @@ return [
         'main' => [
             'class' => 'app\modules\main\Module',
         ],
-        'modules' => [
-            'user' => [
-                'class' => 'app\modules\user\Module',
-            ],
+        'user' => [
+            'class' => 'app\modules\user\Module',
         ],
     ],
     'components' => require(__DIR__ . '/components.php'),

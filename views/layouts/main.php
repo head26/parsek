@@ -46,10 +46,10 @@ AppAsset::register($this);
         ];
     }
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Войти', 'url' => ['/login']];
     } else {
         $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
+            . Html::beginForm(['/logout'], 'post')
             . Html::submitButton(
                 'Выход (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link']
