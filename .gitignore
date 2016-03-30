@@ -5,9 +5,8 @@
 # phpstorm project files
 .idea
 
-/console/runtime
 # netbeans project files
-/common/runtime
+
 nbproject
 
 # zend studio for eclipse project files
