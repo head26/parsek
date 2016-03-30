@@ -5,6 +5,9 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use app\modules\user\models\User;
 use yii\helpers\ArrayHelper;
+use app\common\components\grid\SetColumn;
+use kartik\date\DatePicker;
+use app\common\components\grid\LinkColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel \app\modules\user\models\SearchUser */
@@ -23,36 +26,42 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'rowOptions' => function ($model, $key, $index, $grid)
-        {
-            /*if($model->status == false) {
-                return ['style' => 'background-color:#778899;'];
-            }*/
-            return [ 'value' => \app\modules\user\models\User::getStatusesArray()[10]];
-        },
+
         'filterModel' => $searchModel,
         //'filter' => ArrayHelper::map(User::getStatusesArray(), 'id', 'name'),
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'id',
-            'username',
-            //'auth_key',
-            //'password_hash',
-            //'password_reset_token',
+            [
+                'class' => LinkColumn::className(),
+                'attribute' => 'username',
+            ],
              'email:email',
-            [
-                'attribute' => 'status',
-                'value' => function ($model) { return User::getStatusesArray()[$model->status]; },
-            ],
-            [
-                'attribute' => 'created_at',
-                'format' => ['date', 'php:Y-m-d']
-            ],
-             'created_at',
-             'updated_at',
 
+            [
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at',
+                    //'attribute2' => 'date_to',
+                    'type' => DatePicker::TYPE_INPUT,
+                    'separator' => '-',
+                    'pluginOptions' => ['format' => 'yyyy-mm-dd']
+                ]),
+                'attribute' => 'created_at',
+                'format' => 'datetime',
+            ],
+            [
+                'class' => SetColumn::className(),
+                'filter' => User::getStatusesArray(),
+                'attribute' => 'status',
+                'name' => 'statusName',
+                'cssCLasses' => [
+                    User::STATUS_ACTIVE => 'success',
+                    User::STATUS_BLOCKED => 'default',
+                ],
+            ],
             ['class' => 'yii\grid\ActionColumn',
-                'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{permit}&nbsp;&nbsp;{delete}',
+                'template' => '{update}&nbsp;&nbsp;{permit}&nbsp;&nbsp;{delete}',
                 'buttons' =>
                 [
                     'permit' => function ($url, $model) {

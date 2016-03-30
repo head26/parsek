@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\modules\user\models\User;
+use app\common\components\grid\SetColumn;
 
 /* @var $this yii\web\View */
 /* @var $model \app\modules\user\models\User */
@@ -37,10 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             [
                 'attribute' => 'status',
-                'value' => User::getStatusesArray()[$model->status],
+                'value' => $model->getStatusName(),
             ],
-            'created_at',
-            'updated_at',
+
+            'created_at:date',
+            'updated_at:date',
         ],
     ]) ?>
 

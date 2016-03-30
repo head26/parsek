@@ -25,7 +25,7 @@ use yii\helpers\ArrayHelper;
  */
 class User extends ActiveRecord implements IdentityInterface, UserRbacInterface
 {
-    const STATUS_DELETED = 0;
+    const STATUS_BLOCKED = 0;
     const STATUS_ACTIVE = 10;
 
     public function getUserName()
@@ -77,7 +77,7 @@ class User extends ActiveRecord implements IdentityInterface, UserRbacInterface
     {
         return [
             self::STATUS_ACTIVE => 'Активен',
-            self::STATUS_DELETED => 'Заблокирован',
+            self::STATUS_BLOCKED => 'Заблокирован',
         ];
     }
 

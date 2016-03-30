@@ -5,33 +5,41 @@ namespace app\modules\user\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\user\models\User;
 
 /**
  * SearchUser represents the model behind the search form about `app\modules\user\models\User`.
  */
-class SearchUser extends \app\modules\user\models\User
+class SearchUser extends Model
 {
+    public $id;
+    public $username;
+    public $status;
+    public $email;
+    public $created_at;
+
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [['created_at'], 'date', 'format' => 'php:Y-m-d'],
+            [['username', 'email'], 'safe'],
         ];
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
+    public function attributeLabels()
     {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        return [
+            'id' => 'ID',
+            'username' => 'Логин',
+            'email' => 'Email',
+            'status' => 'Статус',
+            'created_at' => 'Создан',
+            'updated_at' => 'Обновлен',
+        ];
     }
-
     /**
      * Creates data provider instance with search query applied
      *
@@ -47,13 +55,16 @@ class SearchUser extends \app\modules\user\models\User
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC],
+            ]
         ]);
 
         $this->load($params);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
 
@@ -61,15 +72,12 @@ class SearchUser extends \app\modules\user\models\User
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
-            ->andFilterWhere(['like', 'email', $this->email]);
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['>=', 'created_at', $this->created_at ? strtotime($this->created_at . ' 00:00:00') : null])
+            ->andFilterWhere(['<=', 'created_at', $this->created_at ? strtotime($this->created_at . ' 23:59:59') : null]);
 
         return $dataProvider;
     }
